@@ -13,6 +13,15 @@ let
         shell = pkgs.fish;
     };
 
+    # An unpriviledged user for games and whatnot.
+    gaming = {
+        extraGroups = [
+            "audio"
+        ];
+        isNormalUser = true;
+        shell = pkgs.fish;
+    };
+
     xmonad = {
         enable = true;
         enableContribAndExtras = true;
@@ -47,6 +56,7 @@ in
         ./hardware-configuration.nix
 
         ./programs/slack
+        ./programs/steam
         ./programs/vim
     ];
 
@@ -235,6 +245,6 @@ in
     system.stateVersion = "20.09";
 
     users.users = {
-        inherit xand;
+        inherit xand gaming;
     };
 }
