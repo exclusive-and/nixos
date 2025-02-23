@@ -29,7 +29,19 @@ let
         enableContribAndExtras = true;
     };
 
-    defaultSession = "none+xmonad";
+    sessions = {
+        # Auto-login session; happens once on initial startup.
+        initial_session = {
+            command = "${pkgs.xorg.xinit}/bin/startx";
+            user = "xand";
+        };
+
+        # Greeter session.
+        default_session = {
+            command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd ${pkgs.xorg.xinit}/bin/startx";
+            user = "greeter";
+        };
+    };
 
     systemPackages = with pkgs; [
         alacritty
@@ -38,6 +50,7 @@ let
         feh
         lshw
         wget
+        xorg.xinit # X server initialization (xinit, startx)
     ];
 in
 {
@@ -170,18 +183,19 @@ in
 
     programs.fish.enable = true;
 
-    security.rtkit.enable = true;
+    security = {
+        polkit.enable = true;
+        rtkit.enable = true;
+    };
 
     services = {
         dbus.enable = true;
 
-        displayManager = {
-            autoLogin = {
-                enable = true;
-                user = "xand";
+        greetd = {
+            enable = true;
+            settings = {
+                inherit (sessions) initial_session default_session;
             };
-
-            inherit defaultSession;
         };
 
         openssh.enable = true;
@@ -214,10 +228,7 @@ in
         xserver = {
             enable = true;
 
-            displayManager.lightdm = {
-                enable = true;
-                greeters.tiny.enable = true;
-            };
+            displayManager.startx.enable = true;
 
             monitorSection = ''
                 Option "DPMS" "false"
