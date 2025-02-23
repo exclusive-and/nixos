@@ -3,6 +3,8 @@
 let
     hostName = "hyperion";
 
+    kernelPackages = pkgs.linuxPackages;
+
     # Me; the main user of hyperion.
     xand = {
         extraGroups = [
@@ -40,7 +42,7 @@ let
 in
 {
     boot = {
-        kernelPackages = pkgs.linuxPackages_latest;
+        inherit kernelPackages;
 
         loader = {
             efi.canTouchEfiVariables = true;
