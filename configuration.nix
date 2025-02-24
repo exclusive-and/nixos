@@ -20,20 +20,6 @@ let
         enableContribAndExtras = true;
     };
 
-    sessions = {
-        # Auto-login session; happens once on initial startup.
-        initial_session = {
-            command = "${pkgs.xorg.xinit}/bin/startx";
-            user = "xand";
-        };
-
-        # Greeter session.
-        default_session = {
-            command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd ${pkgs.xorg.xinit}/bin/startx";
-            user = "greeter";
-        };
-    };
-
     systemPackages = with pkgs; [
         alacritty
         curl
@@ -60,9 +46,10 @@ in
 
     imports = [
         ./hardware-configuration.nix
-
         ./programs/slack
         ./programs/vim
+        ./services/ddclient
+        ./services/greetd
     ];
 
     console = {
@@ -180,13 +167,6 @@ in
 
     services = {
         dbus.enable = true;
-
-        greetd = {
-            enable = true;
-            settings = {
-                inherit (sessions) initial_session default_session;
-            };
-        };
 
         openssh.enable = true;
 
