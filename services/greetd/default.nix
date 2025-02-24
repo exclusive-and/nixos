@@ -7,6 +7,15 @@ let
         user = "xand";
     };
 
+    inherit (config.networking) hostName;
+    inherit (config.system.nixos) distroName codeName version;
+
+    greetText = ''
+        ${distroName} ${codeName} ${version}
+        -
+        ${hostName}
+    '';
+
     greetCmd = ''
         ${pkgs.greetd.tuigreet}/bin/tuigreet \
             --cmd ${pkgs.xorg.xinit}/bin/startx \
@@ -22,9 +31,7 @@ let
     };
 in
 {
-    environment.etc."issue".text = ''
-        hyperion - NixOS 24.11
-    '';
+    environment.etc."issue".text = greetText;
 
     services.greetd = {
         enable = true;
