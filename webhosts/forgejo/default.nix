@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-    domain = "xandgate.com";
+    domain = "git.computeroid.org";
 in
 {
     users = {

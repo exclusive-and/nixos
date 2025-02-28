@@ -49,10 +49,11 @@ in
         ./programs/slack
         ./programs/vim
         ./services/ddclient
-        ./services/forgejo
         ./services/greetd
-        ./services/nginx
         ./services/openssh
+        ./webhosts/coraless
+        ./webhosts/forgejo
+        ./webhosts/nginx
     ];
 
     console = {
