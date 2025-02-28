@@ -116,6 +116,14 @@ in
             interface = "eno1";
         };
 
+        extraHosts = ''
+            127.0.0.1   computeroid.org
+            127.0.0.1   coraless.computeroid.org
+            127.0.0.1   git.computeroid.org
+            127.0.0.1   xandgate.com
+            127.0.0.1   git.xandgate.com
+        '';
+
         firewall.allowedTCPPorts = [
             22  # ssh
             80  # http
