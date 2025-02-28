@@ -49,7 +49,10 @@ in
         ./programs/slack
         ./programs/vim
         ./services/ddclient
+        ./services/forgejo
         ./services/greetd
+        ./services/nginx
+        ./services/openssh
     ];
 
     console = {
@@ -168,8 +171,6 @@ in
     services = {
         dbus.enable = true;
 
-        openssh.enable = true;
-
         pipewire = {
             enable = true;
             alsa.enable = true;
@@ -192,8 +193,6 @@ in
         };
 
         seatd.enable = true;
-
-        sshd.enable = true;
 
         xserver = {
             enable = true;
